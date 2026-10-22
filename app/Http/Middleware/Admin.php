@@ -12,9 +12,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'member') {
+        if (auth()->check() && (auth()->user()->role === 'admin' || in_array(auth()->user()->email, ['admin@jmap.com', 'your@email.com']))) {
             return $next($request);
         }
-        abort(403);
+
+        return redirect()->route('dashboard')->with('error', 'Akses ditolak. Halaman ini hanya dapat diakses oleh Administrator.');
     }
 }

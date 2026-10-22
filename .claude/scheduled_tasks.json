@@ -5,6 +5,7 @@
       "cron": "*/5 * * * *",
       "prompt": "Run code review on all pending places",
       "createdAt": 1792244844115,
+      "lastFiredAt": 1792260005841,
       "recurring": true
     }
   ]

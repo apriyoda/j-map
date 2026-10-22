@@ -10,7 +10,7 @@ class WelcomePageTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function navbar_displays_brand_and_login_link()
+    public function test_navbar_displays_brand_and_login_link()
     {
         $response = $this->get('/');
         $response->assertStatus(200);

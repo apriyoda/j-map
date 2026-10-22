@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Map - Japanese Subculture Map</title>
+    <title>NihonLink J-Map - Japanese Subculture Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,15 +15,22 @@
 </head>
 <body class="font-sans antialiased bg-gray-50">
     <!-- Navbar -->
-    <header class="bg-white shadow-2xl">
+    <header class="bg-white shadow-sm border-b border-gray-100">
         <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Brand -->
-            <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-900">J-Map</a>
+            <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                <span class="text-rose-600">NihonLink</span> J-Map
+            </a>
             <!-- Right -->
             @auth
-                <a href="{{ url('/dashboard') }}" class="text-gray-700 hover:text-blue-600 transition font-semibold">Dashboard</a>
+                <a href="{{ url('/dashboard') }}" class="text-gray-700 hover:text-rose-600 transition font-semibold">Dashboard</a>
             @else
-                <a href="{{ url('/login') }}" class="text-gray-700 hover:text-blue-600 transition font-semibold">Login</a>
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-rose-600 transition font-semibold text-sm">Login</a>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition text-sm font-semibold shadow-sm">Register</a>
+                    @endif
+                </div>
             @endauth
         </nav>
     </header>

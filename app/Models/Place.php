@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Place extends Model
 {
-    protected $fillable = ['name', 'category', 'description', 'latitude', 'longitude', 'image'];
+    protected $fillable = ['name', 'category', 'description', 'latitude', 'longitude', 'image', 'user_id', 'status'];
     protected $appends = ['image_url'];
 
     public function getImageUrlAttribute()
@@ -17,5 +17,6 @@ class Place extends Model
         if (str_starts_with($this->image, 'http')) {
             return $this->image;
         }
-        return '/storage/' . ltrim($this->image, '/');    }
+        return '/storage/' . ltrim(preg_replace('/^public\//', '', $this->image), '/');
+    }
 }

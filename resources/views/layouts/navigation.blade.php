@@ -2,34 +2,42 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex items-center">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                <div class="shrink-0 flex items-center me-6">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+                        <x-application-logo class="block h-9 w-auto fill-current text-rose-600" />
+                        <span class="font-bold text-lg text-gray-800 tracking-tight hidden md:inline">NihonLink</span>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 @auth
-                @if (auth()->user()->role === 'admin')
-                    <x-nav-link :href="{{ route('dashboard') }}" :active="{{ request()->routeIs('dashboard') }}">
+                <div class="hidden sm:flex sm:items-center sm:gap-6 sm:h-16">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="h-16 inline-flex items-center">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="{{ route('places.index') }}" :active="{{ request()->routeIs('places.index') }}">
-                        {{ __('Daftar Tempat') }}
+
+                    @if (auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('places.index')" :active="request()->routeIs('places.index')" class="h-16 inline-flex items-center">
+                            {{ __('Daftar Tempat') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('places.create')" :active="request()->routeIs('places.create')" class="h-16 inline-flex items-center">
+                            {{ __('Tambah Tempat') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.places.pending')" :active="request()->routeIs('admin.places.pending')" class="h-16 inline-flex items-center">
+                            {{ __('Verifikasi Tempat') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('places.create')" :active="request()->routeIs('places.create')" class="h-16 inline-flex items-center">
+                            {{ __('Ajukan Tempat') }}
+                        </x-nav-link>
+                    @endif
+
+                    <x-nav-link :href="url('/')" :active="request()->is('/')" class="h-16 inline-flex items-center">
+                        {{ __('Lihat Peta Utama') }}
                     </x-nav-link>
-                    <x-nav-link :href="{{ route('places.create') }}" :active="{{ request()->routeIs('places.create') }}">
-                        {{ __('Tambah Tempat') }}
-                    </x-nav-link>
-                @elseif (auth()->user()->role === 'member')
-                    <x-nav-link :href="{{ route('places.suggest') }}" :active="{{ request()->routeIs('places.suggest') }}">
-                        {{ __('Ajukan Tempat') }}
-                    </x-nav-link>
-                @endif
-                <x-nav-link :href="{{ url('/') }}" :active="{{ request()->is('/') }}">
-                    {{ __('Lihat Peta Utama') }}
-                </x-nav-link>
+                </div>
                 @endauth
             </div>
 
@@ -90,9 +98,31 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            @auth
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+
+                @if (auth()->user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('places.index')" :active="request()->routeIs('places.index')">
+                        {{ __('Daftar Tempat') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('places.create')" :active="request()->routeIs('places.create')">
+                        {{ __('Tambah Tempat') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.places.pending')" :active="request()->routeIs('admin.places.pending')">
+                        {{ __('Verifikasi Tempat') }}
+                    </x-responsive-nav-link>
+                @else
+                    <x-responsive-nav-link :href="route('places.create')" :active="request()->routeIs('places.create')">
+                        {{ __('Ajukan Tempat') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                <x-responsive-nav-link :href="url('/')" :active="request()->is('/')">
+                    {{ __('Lihat Peta Utama') }}
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->

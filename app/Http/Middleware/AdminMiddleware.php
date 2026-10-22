@@ -21,12 +21,12 @@ class AdminMiddleware
         }
 
         $user = Auth::user();
-        $allowedEmails = ['admin@jmap.com', 'your@email.com']; // Ganti 'your@email.com' dengan email admin Anda
+        $allowedEmails = ['admin@jmap.com', 'your@email.com'];
 
-        if (in_array($user->email, $allowedEmails)) {
+        if ($user->role === 'admin' || in_array($user->email, $allowedEmails)) {
             return $next($request);
         }
 
-        abort(403, 'Unauthorized action.');
+        return redirect()->route('dashboard')->with('error', 'Akses ditolak. Halaman ini hanya dapat diakses oleh Administrator.');
     }
 }
